@@ -16,7 +16,7 @@ const adminOrderRoutes = require("./routes/adminOrderRoutes");
 const app = express();
 app.use(express.json());
 const allowedOrigins = [
-  "https://shop-it-fashion.vercel.app/", // your Vercel frontend URL
+  "https://shop-it-fashion.vercel.app", // your Vercel frontend URL
   "http://localhost:5173",            // dev URL (optional)
 ];
 
