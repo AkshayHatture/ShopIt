@@ -20,10 +20,10 @@ const initialState = {
   error: null,
 };
 
-//ASyncthunk for user login
+//Asyncthunk for user login
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
-  async (userData, { rejectWithVlaue }) => {
+  async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/login`,
@@ -39,10 +39,10 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-//ASyncthunk for user register
+//Asyncthunk for user register
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
-  async (userData, { rejectWithVlaue }) => {
+  async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/register`,
