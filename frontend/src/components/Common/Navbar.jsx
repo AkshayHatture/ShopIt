@@ -14,7 +14,9 @@ const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [navDrawerOpen, setNavDrawerOpen] = useState(false);
   const { cart } = useSelector((state) => state.cart);
-  const {user} = useSelector((state) => state.auth)
+  const {user} = useSelector((state) => state.auth);
+
+  console.log("current user is:", user);
 
   const cartItemCount =
     cart?.products?.reduce((total, product) => total + product.quantity, 0) ||
