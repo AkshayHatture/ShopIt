@@ -12,8 +12,46 @@ const OrderDetailsPage = () => {
     dispatch(fetchOrderDetails(id));
   }, [dispatch, id]);
 
-  if (loading) return <p>Loading ...</p>;
-  if (error) return <p>Error : {error}</p>;
+  if (loading)
+    return (
+      <div className="max-w-7xl mx-auto p-4 sm:p-6">
+        <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-6 sm:p-8 animate-pulse">
+          <div className="h-9 w-56 bg-gray-200 rounded mb-8" />
+          <div className="h-24 bg-gray-100 rounded mb-6" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+            <div className="h-24 bg-gray-100 rounded" />
+            <div className="h-24 bg-gray-100 rounded" />
+            <div className="h-24 bg-gray-100 rounded" />
+          </div>
+          <div className="space-y-3 mb-6">
+            <div className="h-12 bg-gray-100 rounded" />
+            <div className="h-12 bg-gray-100 rounded" />
+            <div className="h-12 bg-gray-100 rounded" />
+          </div>
+          <p className="text-sm text-gray-500 text-center">
+            Loading order details...
+          </p>
+        </div>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="max-w-7xl mx-auto p-4 sm:p-6">
+        <div className="bg-white rounded-lg border border-red-100 shadow-sm p-8 text-center">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+            Unable to load order
+          </h2>
+          <p className="text-red-500 mb-6">{error}</p>
+          <button
+            onClick={() => dispatch(fetchOrderDetails(id))}
+            className="bg-black text-white py-2 px-5 rounded hover:bg-gray-900"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6">

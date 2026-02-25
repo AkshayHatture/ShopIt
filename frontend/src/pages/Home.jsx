@@ -22,13 +22,13 @@ const Home = () => {
         gender: "Women",
         category: "Bottom Wear",
         limit: 8,
-      })
+      }),
     );
     //fetch best seller product
     const fetchBestSeller = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/products/best-seller`
+          `${import.meta.env.VITE_BACKEND_URL}/api/products/best-seller`,
         );
         setBestSellerProduct(response.data);
       } catch (error) {
@@ -49,7 +49,24 @@ const Home = () => {
       {bestSellerProduct?._id ? (
         <ProductDetails productId={bestSellerProduct._id} />
       ) : (
-        <p className="text-center">Loading best seller products ...</p>
+        <div className="max-w-6xl mx-auto p-6">
+          <div className="bg-white p-8 rounded-lg border border-gray-100 shadow-sm animate-pulse">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="h-[420px] bg-gray-200 rounded-lg" />
+              <div className="space-y-4">
+                <div className="h-8 w-3/4 bg-gray-200 rounded" />
+                <div className="h-5 w-1/3 bg-gray-200 rounded" />
+                <div className="h-4 w-full bg-gray-200 rounded" />
+                <div className="h-4 w-11/12 bg-gray-200 rounded" />
+                <div className="h-4 w-2/3 bg-gray-200 rounded" />
+                <div className="h-11 w-full bg-gray-200 rounded mt-6" />
+              </div>
+            </div>
+            <p className="text-center text-sm text-gray-500 mt-6">
+              Loading best seller product...
+            </p>
+          </div>
+        </div>
       )}
 
       <div className="container mx-auto">

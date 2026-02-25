@@ -12,7 +12,7 @@ const EditProductPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { selectedProduct, loading, error } = useSelector(
-    (state) => state.products
+    (state) => state.products,
   );
 
   const [productData, setProductData] = useState({
@@ -62,7 +62,7 @@ const EditProductPage = () => {
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
-        }
+        },
       );
       setProductData((prevData) => ({
         ...prevData,
@@ -81,8 +81,50 @@ const EditProductPage = () => {
     navigate("/admin/products");
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading)
+    return (
+      <div className="max-w-5xl mx-auto p-6">
+        <div className="bg-white shadow-md rounded-md p-6 animate-pulse">
+          <div className="h-9 w-48 bg-gray-200 rounded mb-8" />
+          <div className="space-y-5">
+            <div className="h-11 bg-gray-100 rounded" />
+            <div className="h-28 bg-gray-100 rounded" />
+            <div className="h-11 bg-gray-100 rounded" />
+            <div className="h-11 bg-gray-100 rounded" />
+            <div className="h-11 bg-gray-100 rounded" />
+            <div className="h-11 bg-gray-100 rounded" />
+            <div className="h-11 bg-gray-100 rounded" />
+            <div className="h-24 bg-gray-100 rounded" />
+            <div className="h-11 bg-gray-200 rounded" />
+          </div>
+          <p className="text-sm text-gray-500 text-center mt-6">
+            Loading product editor...
+          </p>
+        </div>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="max-w-5xl mx-auto p-6">
+        <div className="bg-white shadow-md rounded-md border border-red-100 p-8 text-center">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+            Unable to load product
+          </h2>
+          <p className="text-red-500 mb-6">{error}</p>
+          <button
+            onClick={() => {
+              if (id) {
+                dispatch(fetchProductDetails(id));
+              }
+            }}
+            className="bg-black text-white py-2 px-5 rounded hover:bg-gray-900"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
   return (
     <div className="max-w-5xl mx-auto p-6 shadow-md rounded-md">
       <h2 className="text-3xl font-bold mb-6">Edit Product</h2>

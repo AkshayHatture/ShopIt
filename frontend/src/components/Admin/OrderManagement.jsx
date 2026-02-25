@@ -1,30 +1,66 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchAllOrders, updateOrderStatus } from "../../redux/slice/adminOrderSlice";
+import {
+  fetchAllOrders,
+  updateOrderStatus,
+} from "../../redux/slice/adminOrderSlice";
 
 const OrderManagement = () => {
-  
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const {user} = useSelector((state) => state.auth);
-  const {orders, loading, error} = useSelector((state) => state.adminOrders);
+  const { user } = useSelector((state) => state.auth);
+  const { orders, loading, error } = useSelector((state) => state.adminOrders);
 
   useEffect(() => {
-    if(!user || user.role !== "admin"){
+    if (!user || user.role !== "admin") {
       navigate("/");
-    }else{
+    } else {
       dispatch(fetchAllOrders());
     }
   }, [dispatch, user, navigate]);
 
   const handleStatus = (orderId, status) => {
-    dispatch(updateOrderStatus({id: orderId, status}));
+    dispatch(updateOrderStatus({ id: orderId, status }));
   };
 
-  if(loading) return <p>Loading...</p>
-  if(error) return <p>Error: {error}</p>
+  if (loading)
+    return (
+      <div className="max-w-7xl mx-auto p-6">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-8 animate-pulse">
+          <div className="h-8 w-64 bg-gray-200 rounded mb-6" />
+          <div className="space-y-3">
+            <div className="h-12 bg-gray-100 rounded" />
+            <div className="h-12 bg-gray-100 rounded" />
+            <div className="h-12 bg-gray-100 rounded" />
+            <div className="h-12 bg-gray-100 rounded" />
+          </div>
+          <p className="text-sm text-gray-500 text-center mt-6">
+            Loading orders...
+          </p>
+        </div>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="max-w-7xl mx-auto p-6">
+        <div className="bg-white rounded-lg shadow-sm border border-red-100 p-8 text-center">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+            Unable to load orders
+          </h2>
+          <p className="text-red-500 mb-6">{error}</p>
+          <button
+            onClick={() => dispatch(fetchAllOrders())}
+            className="bg-black text-white py-2 px-5 rounded hover:bg-gray-900"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+
   return (
     <div className="max-w-7xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-6">Order Management</h2>
