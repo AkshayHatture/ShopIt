@@ -13,7 +13,7 @@ const ProductDetails = ({ productId }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { selectedProduct, loading, error, similarProducts } = useSelector(
-    (state) => state.products
+    (state) => state.products,
   );
   const { user, guestId } = useSelector((state) => state.auth);
 
@@ -60,7 +60,7 @@ const ProductDetails = ({ productId }) => {
         color: selectedColor,
         guestId,
         userId: user?._id,
-      })
+      }),
     )
       .then(() => {
         toast.success("Product Added to the Cart!", {
@@ -73,11 +73,53 @@ const ProductDetails = ({ productId }) => {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="min-h-[70vh] p-6 flex items-center justify-center">
+        <div className="w-full max-w-6xl mx-auto bg-white p-8 rounded-lg shadow-sm border border-gray-100">
+          <div className="animate-pulse space-y-6">
+            <div className="h-8 w-56 bg-gray-200 rounded" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="h-[420px] bg-gray-200 rounded-lg" />
+              <div className="space-y-4">
+                <div className="h-7 w-4/5 bg-gray-200 rounded" />
+                <div className="h-5 w-1/3 bg-gray-200 rounded" />
+                <div className="h-4 w-full bg-gray-200 rounded" />
+                <div className="h-4 w-11/12 bg-gray-200 rounded" />
+                <div className="h-4 w-2/3 bg-gray-200 rounded" />
+                <div className="h-11 w-full bg-gray-200 rounded mt-6" />
+              </div>
+            </div>
+          </div>
+          <p className="text-center text-sm text-gray-500 mt-6">
+            Loading product details...
+          </p>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
-    return <p>Error: {error}</p>;
+    return (
+      <div className="min-h-[70vh] p-6 flex items-center justify-center">
+        <div className="w-full max-w-xl mx-auto bg-white p-8 rounded-lg shadow-sm border border-red-100 text-center">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+            Unable to load product
+          </h2>
+          <p className="text-red-500 mb-6">{error}</p>
+          <button
+            onClick={() => {
+              if (productFetchId) {
+                dispatch(fetchProductDetails(productFetchId));
+                dispatch(fetchSimilarProducts({ id: productFetchId }));
+              }
+            }}
+            className="bg-black text-white py-2 px-5 rounded hover:bg-gray-900"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
   }
   return (
     <div className="p-6">
@@ -131,7 +173,7 @@ const ProductDetails = ({ productId }) => {
               </h1>
               <p className="text-lg text-gray-600 mb-1 line-through">
                 {selectedProduct.originalPrice &&
-                  $ `${selectedProduct.originalPrice}`}
+                  $`${selectedProduct.originalPrice}`}
               </p>
               <p className="text-xl text-gray-500 mb-2">
                 $ {selectedProduct.price}
@@ -226,7 +268,11 @@ const ProductDetails = ({ productId }) => {
             <h2 className="text-2xl text-center font-medium mb-4">
               You may also like
             </h2>
-            <ProductGrid products={similarProducts} loading={loading} error={error}/>
+            <ProductGrid
+              products={similarProducts}
+              loading={loading}
+              error={error}
+            />
           </div>
         </div>
       )}

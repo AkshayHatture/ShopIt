@@ -65,7 +65,7 @@ const CollectionPage = () => {
         {/* sort opeitons */}
         <SortOptions />
 
-        {/* PRoduct grid */}
+        {/* Product grid */}
         <ProductGrid products={products} loading={loading} error={error} />
       </div>
     </div>

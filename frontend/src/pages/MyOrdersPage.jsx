@@ -16,8 +16,41 @@ const MyOrdersPage = () => {
     navigate(`/order/${orderId}`);
   };
 
-  if (loading) return <p>Loading ...</p>;
-  if (error) return <p>Error : {error}</p>;
+  if (loading)
+    return (
+      <div className="max-w-7xl mx-auto p-4 sm:p-6">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 sm:p-8 animate-pulse">
+          <div className="h-8 w-40 bg-gray-200 rounded mb-6" />
+          <div className="space-y-4">
+            <div className="h-12 bg-gray-100 rounded" />
+            <div className="h-14 bg-gray-100 rounded" />
+            <div className="h-14 bg-gray-100 rounded" />
+            <div className="h-14 bg-gray-100 rounded" />
+          </div>
+          <p className="text-sm text-gray-500 text-center mt-6">
+            Loading your orders...
+          </p>
+        </div>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="max-w-7xl mx-auto p-4 sm:p-6">
+        <div className="bg-white rounded-lg shadow-sm border border-red-100 p-6 sm:p-8 text-center">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+            Unable to load orders
+          </h2>
+          <p className="text-red-500 mb-6">{error}</p>
+          <button
+            onClick={() => dispatch(fetchUserOrders())}
+            className="bg-black text-white py-2 px-5 rounded hover:bg-gray-900"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6">
